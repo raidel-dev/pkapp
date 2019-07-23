@@ -1,0 +1,43 @@
+page-security-settings {
+    ion-content {
+        background: white !important;
+        color: #43535F;
+        font-family: Montserrat-Bold;
+        font-size: 12px;
+        .go-arrow {
+            padding: 15px;
+            justify-content: space-between;
+            align-items: center;
+            ion-icon {
+                color: #B5BEC5;
+                font-size: 19px;
+                font-weight: 800;
+                margin-right: 0;
+            }
+            border-bottom: 1px solid #E5E9EC;
+            border-top: 1px solid #E5E9EC;
+        }
+        .toggle-box {
+            padding: 15px;
+            padding-top: 0;
+            ion-row {
+                margin-top: 15px;
+                align-items: center;
+                span {
+                    font-size: 12px;
+                    font-family: Montserrat-Medium;
+                    padding-left: 15px;
+                }
+            }
+        }
+    }
+    ion-header {
+        .right-icon {
+            color: white;
+            font-size: 12px;
+            font-family: Montserrat-Medium;
+            position: absolute;
+            right: 20px;
+        }
+    }
+}

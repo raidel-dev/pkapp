@@ -1,0 +1,19 @@
+page-billing-info {
+    ion-header {
+        .right-icon {
+            color: white;
+            font-size: 12px;
+            font-family: Montserrat-Medium;
+            position: absolute;
+            right: 20px;
+        }
+    }
+    ion-content {
+        background: white!important;
+    }
+    .step-btn {
+        background: #EAF6FF;
+        padding: 0px 10px 20px 10px;
+        margin-bottom: 0;
+    }
+}

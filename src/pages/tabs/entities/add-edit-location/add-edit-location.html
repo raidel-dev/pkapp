@@ -1,0 +1,160 @@
+
+<ion-header>
+  <ion-row class="header-row" (click)="navCtrl.pop()">
+    <ion-row class="header-title">
+      <ion-col col-1>
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </ion-col>
+      <span>
+        Contract Location
+      </span>
+      <ion-col col-1>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="addEditLocationForm" *ngIf="addEditLocationForm">
+    <div>
+      <div class="input-box-md">
+        <mat-form-field class="full-width">
+          <input matInput type="text" placeholder="Address" formControlName="address1" required>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput type="text" placeholder="Apt, Suite" formControlName="address2">
+        </mat-form-field>
+        <mat-form-field class="full-width" *ngIf="serviceTypes">
+          <mat-select formControlName="serviceType" placeholder="Service Type" required>
+            <mat-option *ngFor="let serviceType of serviceTypes" [value]="serviceType">
+              {{ serviceType.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput type="text" placeholder="Zip Code" formControlName="zipCode" (keyup)="getZipCode(false)" maxlength="5" required>
+        </mat-form-field>
+        <ion-label color="info" *ngIf="loadingZipCode">Validating zip code...</ion-label>
+        <ion-row *ngIf="zipCodeErrorMessage" text-wrap>
+          <ion-col col-12>
+            <ion-label color="danger">{{ zipCodeErrorMessage }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-spinner *ngIf="loadingZipCode"></ion-spinner>
+        <mat-form-field class="full-width" *ngIf="!loadingZipCode && citiesInZipCode">
+          <mat-select formControlName="city" placeholder="City" required>
+            <mat-option *ngFor="let city of citiesInZipCode" [value]="city">
+              {{ city }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="full-width" *ngIf="!loadingZipCode && stateID.value && stateID.value != 'null'">
+          <input matInput type="text" placeholder="State" formControlName="stateShort">
+        </mat-form-field>
+        <ion-label color="info" *ngIf="loadingUtilities">Loading utilities...</ion-label>
+        <ion-spinner *ngIf="loadingUtilities"></ion-spinner>
+        <ion-row *ngIf="utilityErrorMessage" text-wrap>
+          <ion-col col-12>
+            <ion-label color="danger">{{ utilityErrorMessage }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <mat-form-field class="full-width" *ngIf="!loadingUtilities && utilities && utilities.length">
+          <mat-select formControlName="utility" placeholder="Utility" (selectionChange)="loadUtilityProperties()" required>
+            <mat-option *ngFor="let utility of utilities" [value]="utility">
+              {{ utility.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button *ngIf="!loadingUtilities && utility?.value?.sampleBillAttachmentID"
+          class="normal-button attachment-button" ion-button color=secondary (click)="goSampleBill()">See Sample Bill</button>
+        <mat-form-field class="full-width" *ngIf="!loadingUtilityProperties && zones && zones.length">
+          <mat-select formControlName="zone" placeholder="Zone" required>
+            <mat-option *ngFor="let zone of zones" [value]="zone">
+              {{ zone.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="full-width" *ngIf="!loadingUtilityProperties && rateClasses && rateClasses.length">
+          <mat-select formControlName="rateClass" placeholder="Rate Class" required>
+            <mat-option *ngFor="let rateClass of rateClasses" [value]="rateClass">
+              {{ rateClass.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="full-width with-hint" *ngIf="!loadingUtilities && utilities && utilities.length">
+          <input matInput type="text" [placeholder]="utility?.value?.accountNumLabel" formControlName="utilityAccountNum" [attr.maxLength]="utilityAccountNumLength" required>
+          <mat-hint>{{ utility?.value?.accountNumFormatHelp }}</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="full-width" *ngIf="!loadingUtilities && utilities && utilities.length && utility.value?.showMeterNum">
+          <input matInput type="text" placeholder="Utility Meter Number" formControlName="utilityMeterNum" required>
+        </mat-form-field>
+        <mat-form-field class="full-width" *ngIf="!loadingUtilities && utilities && utilities.length && utility.value?.showNameKey">
+          <input matInput type="text" placeholder="Utility Name Key" formControlName="utilityNameKey" required>
+        </mat-form-field>
+        <mat-form-field class="full-width" *ngIf="!loadingUtilities && utilities && utilities.length && utility.value?.showReferenceNum">
+          <input matInput type="text" placeholder="Utility Reference Number" formControlName="utilityReferenceNum" required>
+        </mat-form-field>
+        <mat-form-field class="full-width with-hint" *ngIf="!loadingUtilities && utilities && utilities.length">
+          <input matInput type="tel" placeholder="Annual Usage" formControlName="annualUsage" [textMask]="{ mask: Constants.masks.usage }" maxlength="13" required>
+          <mat-hint>Please enter the exact usage from your current bill. Estimate your annual use by adding up usage over the last 12 months.</mat-hint>
+          <span matSuffix>{{ utility.value?.unit }}</span>
+        </mat-form-field>
+      </div>
+
+      <ion-row text-wrap *ngIf="startAddEditLocationFormValidation && addEditLocationErrorMessage">
+        <ion-col col-12>
+          <ion-label color="danger">{{ addEditLocationErrorMessage }}</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-item text-wrap *ngIf="startAddEditLocationFormValidation && !address1.valid && (address1.dirty || address1.touched)">
+        <ion-label color="danger">Please enter your address.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startAddEditLocationFormValidation && !city.valid && (city.dirty || city.touched)">
+        <ion-label color="danger">Please choose a city.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startAddEditLocationFormValidation && !utility.valid && (utility.dirty || utility.touched)">
+        <ion-label color="danger">Please choose a utility.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startAddEditLocationFormValidation && !rateClass.valid && (rateClass.dirty || rateClass.touched)">
+        <ion-label color="danger">Please choose a rate class.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startAddEditLocationFormValidation && !zone.valid && (zone.dirty || zone.touched)">
+        <ion-label color="danger">Please choose a zone.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startAddEditLocationFormValidation && !annualUsage.valid && (annualUsage.dirty || annualUsage.touched)">
+        <ion-label color="danger" *ngIf="annualUsage.errors.min">Your annual usage must be greater than 0.</ion-label>
+        <ion-label color="danger" *ngIf="annualUsage.errors.required">Please input your annual usage.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startAddEditLocationFormValidation && !utilityAccountNum.valid && (utilityAccountNum.dirty || utilityAccountNum.touched)">
+        <ion-label color="danger">Please input your valid utility account number.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startAddEditLocationFormValidation && !utilityNameKey.valid && (utilityNameKey.dirty || utilityNameKey.touched)">
+        <ion-label color="danger">Please input your utility name key.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startAddEditLocationFormValidation && !utilityMeterNum.valid && (utilityMeterNum.dirty || utilityMeterNum.touched)">
+        <ion-label color="danger">Please input your utility meter number.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startAddEditLocationFormValidation && !utilityReferenceNum.valid && (utilityReferenceNum.dirty || utilityReferenceNum.touched)">
+        <ion-label color="danger">Please input your utility reference number.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startAddEditLocationFormValidation && !zipCodeValid.valid && (zipCodeValid.dirty || zipCodeValid.touched)">
+        <ion-label color="danger">Please input a valid zip code.</ion-label>
+      </ion-item>
+
+      <div class="step-btn">
+        <button class="normal-button" ion-button color="primary" [disabled]="loadingZipCode || loadingUtilities || !addEditEnabled" (click)="addEditLocation()">{{ addEditTitle }}</button>
+      </div>
+    </div>
+  </form>
+</ion-content>

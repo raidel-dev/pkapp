@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-row class="header-row" (click)="navCtrl.pop()">
+    <ion-row class="header-title">
+      <ion-col col-1>
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </ion-col>
+      <span>
+        FAQs
+      </span>
+      <ion-col col-1>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+  <ion-row class="header-item">
+    <ion-label>Training videos (Coming soon!)</ion-label>
+    <ion-icon name="ios-arrow-forward"></ion-icon>
+  </ion-row>
+</ion-header>
+
+
+<ion-content padding>
+  <mat-accordion>
+    <ion-list>
+      <ion-item no-lines text-wrap *ngFor="let faq of faqs">
+        <mat-expansion-panel (opened)="faq.opened=true" (closed)="faq.opened=false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <ion-row>
+                <ion-row class="card-title">
+                  <span text-wrap [innerHTML]="faq.question"></span>
+                </ion-row>
+              </ion-row>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ion-row class="card-panel" *ngIf="!faq.route" [innerHTML]="faq.answer"></ion-row>
+          <button class="normal-button" *ngIf="faq.route" ion-button color=secondary (click)="goRoute(faq.route)">{{ faq.answer }}</button>
+        </mat-expansion-panel>
+      </ion-item>
+    </ion-list>
+  </mat-accordion>
+</ion-content>

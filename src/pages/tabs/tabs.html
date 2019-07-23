@@ -1,0 +1,6 @@
+<ion-tabs [ngClass]="{'hidden': getTabHiddenStatus()}" (ionChange)="tabChanged($event)">
+  <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="custom-icon-home"></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="Contracts" tabIcon="custom-icon-entity"></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="Billing" tabIcon="custom-icon-billing"></ion-tab>
+  <ion-tab [root]="tab4Root" tabTitle="Profile" tabIcon="custom-icon-profile"></ion-tab>
+</ion-tabs>

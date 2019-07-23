@@ -1,0 +1,149 @@
+/* Stripe Forms */
+.StripeElement {
+  background-color: white;
+  height: 40px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+
+/* global spinner */
+ion-spinner {
+  display: block !important;
+  margin: 0 auto;
+  margin-top: 50%;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.with-password-hint {
+  padding-bottom: 8rem;
+}
+
+.with-hint {
+  padding-bottom: 2.5rem;
+}
+
+ion-calendar,
+ion-calendar-modal {
+  background: #8ADB20 !important;
+  .title .switch-btn {
+      //title
+      color: white;
+      font-size: 16px;
+      font-family: Montserrat-Medium;
+      text-transform: capitalize;
+  }
+  ion-calendar-month button.days-btn p {
+      //normal days
+      color: white;
+      font-size: 12px;
+      font-family: Montserrat-Medium;
+  }
+  ion-calendar-month .primary .days .on-selected p {
+      //selected font
+      font-size: 12px;
+      font-family: Montserrat-Medium;
+  }
+  ion-calendar-week .week-title li {
+      //week
+      font-size: 10px;
+      font-family: Montserrat-SemiBold;
+      color: rgba($color: white, $alpha: 0.4)
+  }
+  ion-calendar-month .primary .between button.days-btn {
+      //between
+      background: rgba($color: #8ADB20, $alpha: 0.4)
+  }
+  ion-calendar-month .primary .startSelection:after {
+      //between
+      background: rgba($color: #8ADB20, $alpha: 0.4)
+  }
+  ion-calendar-month .primary .endSelection:after {
+      //between
+      background: rgba($color: #8ADB20, $alpha: 0.4)
+  }
+  ion-calendar-month-picker .month-packer-item button {
+      // month picker
+      color: white !important;
+      font-family: Montserrat-Medium;
+  }
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]),
+.mat-raised-button:not([class*=mat-elevation-z]) {
+  box-shadow: none !important;
+}
+
+ion-content {
+  .ion-ios-arrow-forward,
+  .ion-ios-arrow-down,
+  .ion-ios-arrow-up {
+    color: #B6C0C9 !important;
+    font-weight: bold !important;
+    font-size: 18px  !important;
+  }
+
+  .add-item-button {
+    margin-bottom: 10px;
+    .button-md {
+      margin-top: 0;
+    }
+  }
+
+  .add-item-button-no-margin-top {
+    .normal-button {
+      margin-top: 0 !important;
+    }
+  }
+
+  .card-md,
+  .button-md {
+    box-shadow: none;
+  }
+
+  .button-md {
+    border-radius: 10px;
+    right: 2px;
+  }
+
+  .initials {
+    text-transform: uppercase;
+  }
+}
+
+.alert-radio-label {
+  text-overflow: unset !important;
+  white-space: normal !important;
+}
+
+.password-erorr {
+  color: #f44336;
+}
+
+.password-success {
+  color: #8ADB20;
+}
+
+.with-validation {
+  margin-left: 10px;
+}

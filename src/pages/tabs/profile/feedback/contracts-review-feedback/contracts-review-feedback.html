@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-row class="header-row" (click)="navCtrl.pop()">
+    <ion-row class="header-title">
+      <ion-col col-1>
+        <ion-icon name="ios-arrow-back" ></ion-icon>
+      </ion-col>
+      <span>
+        Review Contracts
+      </span>
+      <ion-col col-1>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+  <p class="detail-title">Help Suppliers better serve their customers
+    and help other business decision makers by
+    writing an honest review of your energy contract</p>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-spinner *ngIf="loading"></ion-spinner>
+  <ng-container *ngIf="!loading">
+    <ion-row *ngIf="(!contracts || !contracts.length) && !loading">
+      <ion-col col-12 text-center>
+        You don't have any contracts to review yet!  You'll get an alert when your contract is ready for review, or you can check back when your contract has expired.
+      </ion-col>
+    </ion-row>
+    <ion-card *ngFor="let contract of contracts">
+      <ion-row class="top-row">
+
+        <ion-col col-9>
+          <div class="item-des">
+            <ion-label no-padding class="note-row">{{ contract.customer.DBAName }}</ion-label>
+            <ion-label no-padding class="month-row">{{ contract.product ? contract.product.name + ' ' : '' }}{{ contract.term }} Months</ion-label>
+          </div>
+        </ion-col>
+        <!-- gas icon -->
+        <ion-col col-2 *ngIf="contract.serviceTypeID === Constants.serviceTypes.gas">
+          <ion-row>
+            <gas-icon></gas-icon>
+          </ion-row>
+        </ion-col>
+        <!-- electricity icon -->
+        <ion-col col-2 *ngIf="contract.serviceTypeID === Constants.serviceTypes.electricity">
+          <ion-row>
+            <electricity-icon></electricity-icon>
+          </ion-row>
+        </ion-col>
+        <!--arrow  -->
+        <ion-col col-1 (click)="goContractDetail(contract)">
+          <ion-row>
+            <ion-icon class="arrow-icon" name="ios-arrow-forward"></ion-icon>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="detail-block">
+        <img [src]="contract.supplier.logo">
+      </ion-row>
+      <button class="normal-button" ion-button color=danger (click)="goReviewContract(contract)">Get Started</button>
+
+    </ion-card>
+  </ng-container>
+</ion-content>

@@ -1,0 +1,24 @@
+page-terms-and-conditions {
+    ion-content {
+        background-color: white !important;
+        #conditionframe {
+            //set the height to 100% of the viewport less the height of the header
+            height: calc( 100vh - 68px);
+
+            //set the width to 100% of the viewport width
+            width: 100vw;
+
+            //remove border, padding, margin
+            border: none;
+            padding: 0;
+            margin: 0;
+            margin-top: -62px;
+        }
+        .agree-btn {
+            background: #EAF6FF;
+            width: 100%;
+            padding: 15px;
+            padding-top: 0;
+        }
+    }
+}

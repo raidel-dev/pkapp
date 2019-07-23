@@ -1,0 +1,114 @@
+<div class="menus">
+  <ion-menu side="right" type="overlay" swipeEnabled=false [content]="mycontent" id="endTimePicker">
+    <ion-header>
+      <ion-row class="header-row">
+        <ion-row class="header-title">
+          <ion-col col-1>
+          </ion-col>
+          <span class="other-menu">
+            New End Time
+          </span>
+          <ion-col col-1 (click)="closeMenu()">
+            <div class="right-icon">
+              Done
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-header>
+
+    <ion-content>
+      <ion-row class="answer-row" *ngFor="let availableTime of availableTimes" (click)="chooseEndTime(availableTime)">
+        <ion-col col-10>
+          <p [ngClass]="availableTime === endTime ? 'que-title checked' : 'que-title'">{{ availableTime }}</p>
+        </ion-col>
+        <ion-col col-2>
+          <ion-row *ngIf="availableTime === endTime" class="check-row">
+            <ion-icon name="ios-checkmark"></ion-icon>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-content>
+  </ion-menu>
+</div>
+<ion-header #mycontent>
+  <ion-row class="header-row">
+    <ion-row class="header-title">
+      <ion-col col-1>
+        <ion-icon name="ios-arrow-back" (click)="navCtrl.pop()"></ion-icon>
+      </ion-col>
+      <span>
+        Extend Auction
+      </span>
+      <ion-col col-1></ion-col>
+    </ion-row>
+  </ion-row>
+  <ion-row class="header-detail-wrap">
+    <ion-row class="header-detail">
+      <ion-col no-padding col-6>
+        <ion-row>
+          <ion-col col-7>
+            <span class="header-detail-title" no-padding>New End Date</span><br>
+            <span class="header-detail-des" no-padding>{{ endDate | date:'shortDate' }}</span>
+          </ion-col>
+          <ion-col no-padding col-5>
+            <ion-row no-padding class="full-height align-center" (click)="openCalendar()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+                <g id="Group_936" data-name="Group 936" transform="translate(-265 -317)">
+                  <g id="Icon-28_placeholder" transform="translate(-200 -574)">
+                    <rect id="Rectangle_307" data-name="Rectangle 307" width="28" height="28"
+                      transform="translate(465 891)" fill="none" />
+                  </g>
+                  <g id="Group_755" data-name="Group 755" transform="translate(270.716 322.751)">
+                    <path id="Path_15" data-name="Path 15"
+                      d="M1.515,11.463.305,16.1a.492.492,0,0,0,.128.5.491.491,0,0,0,.495.128l4.435-1.137L16.324,4.623A1.509,1.509,0,0,0,16.782,3.5a1.457,1.457,0,0,0-.477-1.1L14.527.68A1.548,1.548,0,0,0,12.365.7Z"
+                      transform="translate(0 0)" fill="none" stroke="#fff" stroke-linecap="round"
+                      stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" />
+                  </g>
+                </g>
+              </svg>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col no-padding col-6>
+        <ion-row>
+          <ion-col col-7>
+            <span class="header-detail-title" no-padding>New End Time</span><br>
+            <span class="header-detail-des" no-padding>{{ endTime }}</span>
+          </ion-col>
+          <ion-col no-padding col-5>
+            <ion-row no-padding class="full-height align-center" (click)="openMenu()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+                <g id="Group_936" data-name="Group 936" transform="translate(-265 -317)">
+                  <g id="Icon-28_placeholder" transform="translate(-200 -574)">
+                    <rect id="Rectangle_307" data-name="Rectangle 307" width="28" height="28"
+                      transform="translate(465 891)" fill="none" />
+                  </g>
+                  <g id="Group_755" data-name="Group 755" transform="translate(270.716 322.751)">
+                    <path id="Path_15" data-name="Path 15"
+                      d="M1.515,11.463.305,16.1a.492.492,0,0,0,.128.5.491.491,0,0,0,.495.128l4.435-1.137L16.324,4.623A1.509,1.509,0,0,0,16.782,3.5a1.457,1.457,0,0,0-.477-1.1L14.527.68A1.548,1.548,0,0,0,12.365.7Z"
+                      transform="translate(0 0)" fill="none" stroke="#fff" stroke-linecap="round"
+                      stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" />
+                  </g>
+                </g>
+              </svg>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-header>
+
+<ion-content>
+  <ion-spinner *ngIf="loading"></ion-spinner>
+  <ion-row *ngIf="!rfqSession && !loading">
+    <ion-col col-12 text-center>
+      There is no auction yet for this contract.  Please come back later!
+    </ion-col>
+  </ion-row>
+  <div class="step-btn" *ngIf="rfqSession">
+    <button class="normal-button" ion-button color=primary (click)="submit()" [disabled]="loading || !extendAuctionEnabled">{{ extendAuctionText }}</button>
+  </div>
+</ion-content>

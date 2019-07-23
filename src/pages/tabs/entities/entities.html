@@ -1,0 +1,83 @@
+
+<ion-header>
+  <ion-row class="header-row">
+    <ion-row class="header-title" (click)="addEntityOrContract()">
+      <span>
+        CONTRACTS
+      </span>
+      <div class="right-icon">
+        <ion-icon name="ios-add"></ion-icon>
+      </div>
+    </ion-row>
+    <ion-row class="header-tab">
+      <mat-tab-group mat-stretch-tabs (selectedTabChange)="toggleTabs()">
+        <mat-tab>
+          <ng-template matTabLabel>
+            Contract Groups
+          </ng-template>
+        </mat-tab>
+        <mat-tab>
+          <ng-template matTabLabel>
+            Individual Contracts
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </ion-row>
+  </ion-row>
+</ion-header>
+
+<ion-content padding>
+  <ion-spinner *ngIf="loading"></ion-spinner>
+  <ng-container *ngIf="showEntities">
+    <ion-row *ngIf="(!entities || !entities.length) && !loading">
+      <ion-col col-12 text-center>
+        <strong>Contract Groups</strong> allows you to organize contracts into custom groupings. You can add, remove and reassign contracts from groups at anytime. Contracts not yet grouped, or ones you don't want in a group, are listed under <strong>Individual Contracts</strong>.
+        <br><br>
+        Start by clicking the (+) icon on the top right of this page.
+      </ion-col>
+    </ion-row>
+    <ion-row class="item-row" *ngFor="let entity of entities" (click)="openEntitiesDetail(entity)">
+      <ion-label>{{ entity.name }}</ion-label>
+      <ion-icon name="ios-arrow-forward"></ion-icon>
+    </ion-row>
+  </ng-container>
+  <ng-container *ngIf="showContracts">
+    <ion-row *ngIf="(!individualContracts || !(individualContracts | contractsWithoutEntitiesFilter).length) && !loading">
+      <ion-col col-12 text-center>
+        You don't have any contracts yet!  You can start by clicking the plus (+) icon on the top right of this page.
+      </ion-col>
+    </ion-row>
+    <ion-row class="item-row" *ngFor="let contract of individualContracts | contractsWithoutEntitiesFilter">
+      <ion-col col-4 (click)="openContractDetail(contract)">
+        <div class="item-des">
+          <ion-label class="name-row" no-margin>{{ contract.customer?.DBAName }}</ion-label>
+          <ion-label class="address-row" no-margin>{{ contract.customer?.address1 }} {{ contract.customer?.address2 }}</ion-label>
+        </div>
+      </ion-col>
+      <!-- view button -->
+      <ion-col no-padding col-5>
+        <button *ngIf="[94,95,96].indexOf(contract.status) !== -1"
+          class="button-new"
+          (click)="goAuction(contract)">{{ Constants.quoteStatuses[contract.status] }}</button>
+      </ion-col>
+      <!-- gas icon -->
+      <ion-col col-2 *ngIf="contract.serviceTypeID === Constants.serviceTypes.gas">
+        <ion-row>
+          <gas-icon></gas-icon>
+        </ion-row>
+      </ion-col>
+      <!-- electricity icon -->
+      <ion-col col-2 *ngIf="contract.serviceTypeID === Constants.serviceTypes.electricity">
+        <ion-row>
+          <electricity-icon></electricity-icon>
+        </ion-row>
+      </ion-col>
+      <ion-col col-1 (click)="openContractDetail(contract)">
+        <ion-row>
+          <ion-icon name="ios-arrow-forward"></ion-icon>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+
+</ion-content>

@@ -1,0 +1,306 @@
+<div class="menus">
+  <ion-menu side="right" type="overlay" swipeEnabled=false [content]="mycontent" id="products">
+    <ion-header>
+      <ion-row class="header-row">
+        <ion-row class="header-title">
+          <ion-col col-1>
+          </ion-col>
+          <span>
+            Products
+          </span>
+          <ion-col col-1 (click)="closeMenu()">
+            <div class="right-icon">
+              Done
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-header>
+
+    <ion-content>
+      <ion-row class="answer-row" *ngFor="let product of availableProducts" (click)="selectProduct(product)">
+        <ion-col col-10>
+          <p [ngClass]="selectedProduct?.id === product.id ? 'que-title checked' : 'que-title'">{{ product.name }}</p>
+        </ion-col>
+        <ion-col col-2>
+          <ion-row *ngIf="selectedProduct?.id === product.id" class="check-row">
+            <ion-icon name="ios-checkmark"></ion-icon>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-content>
+  </ion-menu>
+  <ion-menu side="right" type="overlay" swipeEnabled=false [content]="mycontent" id="terms">
+    <ion-header>
+      <ion-row class="header-row">
+        <ion-row class="header-title">
+          <ion-col col-1>
+          </ion-col>
+          <span>
+            Terms
+          </span>
+          <ion-col col-1 (click)="closeMenu()">
+            <div class="right-icon">
+              Done
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-header>
+
+    <ion-content>
+      <ion-row class="answer-row" *ngFor="let term of availableTerms | onlyPopularTerms:showAllTerms" (click)="selectTerm(term)">
+        <ion-col col-10>
+          <p [ngClass]="selectedTerm === term ? 'que-title checked' : 'que-title'">{{ term }}</p>
+        </ion-col>
+        <ion-col col-2>
+          <ion-row *ngIf="selectedTerm === term" class="check-row">
+            <ion-icon name="ios-checkmark"></ion-icon>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row class="answer-row" *ngIf="!showAllTerms" (click)="toggleAllTerms()">
+        <ion-col col-10>
+          <p class='que-title'>Show All Possible Terms</p>
+        </ion-col>
+        <ion-col col-2>
+          <ion-row class='que-title' style="margin-top: 10px">
+            <ion-icon name="ios-arrow-down"></ion-icon>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-content>
+  </ion-menu>
+</div>
+<!--header & content -->
+
+<ion-header>
+  <ion-row class="header-row" (click)="goBack()">
+    <ion-row class="header-title">
+      <ion-col col-1>
+        <ion-icon name="ios-arrow-back" ></ion-icon>
+      </ion-col>
+      <span>
+        New Auction
+      </span>
+      <ion-col col-1></ion-col>
+    </ion-row>
+  </ion-row>
+
+  <div *ngIf="stepIndex==1" class="step">
+    <svg xmlns="http://www.w3.org/2000/svg" style="width: 100%" height="30.5" viewBox="0 0 323.754 30.5">
+      <g id="Group_1027" data-name="Group 1027" transform="translate(-14.764 -99.5)">
+        <g id="Ellipse_8" data-name="Ellipse 8" transform="translate(307 99.5) rotate(90)" fill="#8ADB20"
+          stroke="rgba(255,255,255,0.2)" stroke-width="1.5">
+          <circle cx="6.5" cy="6.5" r="6.5" stroke="none" />
+          <circle cx="6.5" cy="6.5" r="5.75" fill="none" />
+        </g>
+        <g id="Ellipse_10" data-name="Ellipse 10" transform="translate(194 99.5) rotate(90)" fill="#8ADB20"
+          stroke="#8ADB20" stroke-width="1.5">
+          <circle cx="6.5" cy="6.5" r="6.5" stroke="none" />
+          <circle cx="6.5" cy="6.5" r="5.75" fill="none" />
+        </g>
+        <g id="Ellipse_9" data-name="Ellipse 9" transform="translate(81 99.5) rotate(90)" fill="#8ADB20"
+          stroke="#8ADB20" stroke-width="1.5">
+          <circle cx="6.5" cy="6.5" r="6.5" stroke="none" />
+          <circle cx="6.5" cy="6.5" r="5.75" fill="none" />
+        </g>
+        <line id="Line_29" data-name="Line 29" x1="100" transform="translate(81.5 106)" fill="none" stroke="#8ADB20"
+          stroke-linecap="round" stroke-width="1.5" stroke-dasharray="1 5" />
+        <line id="Line_30" data-name="Line 30" x1="100" transform="translate(194.5 106)" fill="none"
+          stroke="rgba(255,255,255,0.4)" stroke-linecap="round" stroke-width="1.5" stroke-dasharray="1 5" />
+        <text id="Product_recommender" data-name="Product recommender" transform="translate(74.764 127)" fill="#8ADB20"
+          font-size="10" font-family="Montserrat-SemiBold, Montserrat" font-weight="600">
+          <tspan x="-59.12" y="0">Product recommender</tspan>
+        </text>
+        <text id="Products" transform="translate(188 127)" fill="#8ADB20" font-size="10"
+          font-family="Montserrat-SemiBold, Montserrat" font-weight="600">
+          <tspan x="-23.305" y="0">Products</tspan>
+        </text>
+        <text id="Other_settings" data-name="Other settings" transform="translate(300.518 127)"
+          fill="rgba(255,255,255,0.4)" font-size="10" font-family="Montserrat-SemiBold, Montserrat" font-weight="600">
+          <tspan x="-37.195" y="0">Other settings</tspan>
+        </text>
+      </g>
+    </svg>
+
+  </div>
+  <div *ngIf="stepIndex==2" class="step">
+    <svg xmlns="http://www.w3.org/2000/svg" style="width: 100%" height="30.5" viewBox="0 0 323.754 30.5">
+      <g id="Group_1028" data-name="Group 1028" transform="translate(-14.764 -99.5)">
+        <g id="Ellipse_8" data-name="Ellipse 8" transform="translate(307 99.5) rotate(90)" fill="#8ADB20"
+          stroke="#8ADB20" stroke-width="1.5">
+          <circle cx="6.5" cy="6.5" r="6.5" stroke="none" />
+          <circle cx="6.5" cy="6.5" r="5.75" fill="none" />
+        </g>
+        <g id="Ellipse_10" data-name="Ellipse 10" transform="translate(194 99.5) rotate(90)" fill="#8ADB20"
+          stroke="#8ADB20" stroke-width="1.5">
+          <circle cx="6.5" cy="6.5" r="6.5" stroke="none" />
+          <circle cx="6.5" cy="6.5" r="5.75" fill="none" />
+        </g>
+        <g id="Ellipse_9" data-name="Ellipse 9" transform="translate(81 99.5) rotate(90)" fill="#8ADB20"
+          stroke="#8ADB20" stroke-width="1.5">
+          <circle cx="6.5" cy="6.5" r="6.5" stroke="none" />
+          <circle cx="6.5" cy="6.5" r="5.75" fill="none" />
+        </g>
+        <line id="Line_29" data-name="Line 29" x1="100" transform="translate(81.5 106)" fill="none" stroke="#8ADB20"
+          stroke-linecap="round" stroke-width="1.5" stroke-dasharray="1 5" />
+        <line id="Line_30" data-name="Line 30" x1="100" transform="translate(194.5 106)" fill="none" stroke="#8ADB20"
+          stroke-linecap="round" stroke-width="1.5" stroke-dasharray="1 5" />
+        <text id="Product_recommender" data-name="Product recommender" transform="translate(74.764 127)" fill="#8ADB20"
+          font-size="10" font-family="Montserrat-SemiBold, Montserrat" font-weight="600">
+          <tspan x="-59.12" y="0">Product recommender</tspan>
+        </text>
+        <text id="Products" transform="translate(188 127)" fill="#8ADB20" font-size="10"
+          font-family="Montserrat-SemiBold, Montserrat" font-weight="600">
+          <tspan x="-23.305" y="0">Products</tspan>
+        </text>
+        <text id="Other_settings" data-name="Other settings" transform="translate(300.518 127)" fill="#8ADB20"
+          font-size="10" font-family="Montserrat-SemiBold, Montserrat" font-weight="600">
+          <tspan x="-37.195" y="0">Other settings</tspan>
+        </text>
+      </g>
+    </svg>
+  </div>
+</ion-header>
+
+<ion-content #mycontent>
+  <ion-spinner *ngIf="loading"></ion-spinner>
+  <div class="first-step" *ngIf="stepIndex == 1">
+    <form *ngIf="!loading" [formGroup]="productsForm" [hidden]="!productsForm">
+      <ion-label class="title">CONTRACT BUILDER</ion-label>
+      <div class="card-wrap" *ngFor="let product of products.controls; let i = index">
+        <ion-card>
+          <ion-row>
+            <ion-col class="left-col" no-padding col-2 (click)="removeProduct(i)">
+              <ion-row class="full-height">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+                  <g id="Group_946" data-name="Group 946" transform="translate(-16 -47)">
+                    <path id="Union_1" data-name="Union 1"
+                      d="M-7920.319-1477.389l-4.181-4.093-4.181,4.093a1.379,1.379,0,0,1-1.921,0,1.309,1.309,0,0,1,0-1.881l4.321-4.23-4.321-4.23a1.309,1.309,0,0,1,0-1.881,1.379,1.379,0,0,1,1.921,0l4.181,4.093,4.181-4.093a1.379,1.379,0,0,1,1.921,0,1.309,1.309,0,0,1,0,1.881l-4.321,4.23,4.321,4.23a1.309,1.309,0,0,1,0,1.881,1.365,1.365,0,0,1-.959.39A1.372,1.372,0,0,1-7920.319-1477.389Z"
+                      transform="translate(7954.5 1545)" fill="rgba(255,255,255,0.4)" stroke="rgba(0,0,0,0)"
+                      stroke-width="1" />
+                    <g id="Icon-28_placeholder" transform="translate(-449 -844)">
+                      <rect id="Rectangle_307" data-name="Rectangle 307" width="28" height="28"
+                        transform="translate(465 891)" fill="none" />
+                    </g>
+                  </g>
+                </svg>
+              </ion-row>
+            </ion-col>
+            <ion-col no-padding col-10>
+              <ion-row class="go-arrow-configure" (click)="openProductMenu(i)">
+                <span>{{ product.value.product?.name }}</span>
+                <ion-icon name="ios-arrow-forward"></ion-icon>
+              </ion-row>
+              <ion-row class="go-arrow-configure" (click)="openTermMenu(i)">
+                <span>{{ product.value.term }} {{ product.value.term ? 'months' : '' }}</span>
+                <ion-icon name="ios-arrow-forward"></ion-icon>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </div>
+      <ion-item text-wrap *ngIf="products.controls.length >= 5">
+        <ion-label color="danger">For the best prices available and optimal results, we do not recommend building more than 5 contracts at once.</ion-label>
+      </ion-item>
+      <div class="card-wrap">
+        <button ion-button class="normal-button" color="primary" (click)="addProduct()">Add a product</button>
+      </div>
+
+      <ion-item text-wrap *ngIf="startProductsValidation && productsForm.errors?.productAmount && (productsForm.dirty || productsForm.touched)">
+        <ion-label color="danger">Please add a minimum of one product.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startProductsValidation && productsForm.errors?.productUnique && (productsForm.dirty || productsForm.touched)">
+        <ion-label color="danger">Please choose only unique products.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startProductsValidation && productsForm.errors?.productFilled && (productsForm.dirty || productsForm.touched)">
+        <ion-label color="danger">Please choose product type and term for each product selection.</ion-label>
+      </ion-item>
+
+      <div class="step-btn">
+        <ion-row>
+          <ion-col col-6>
+            <button class="normal-button" ion-button color=secondary (click)="previous()">Previous step</button>
+          </ion-col>
+          <ion-col col-6>
+            <button class="normal-button" ion-button color=secondary (click)="next()">Next step</button>
+          </ion-col>
+        </ion-row>
+      </div>
+    </form>
+  </div>
+  <div class="second-step" *ngIf="stepIndex == 2">
+    <form *ngIf="!loading" [formGroup]="newAuctionForm" [hidden]="!newAuctionForm">
+      <ion-row class="second-row" >
+        <ion-col col-12>
+          <ion-label text-wrap class="title">What day and time are you available to review and select the best energy
+            products for your account?</ion-label>
+          <mat-form-field class="full-width" (click)="openCalendar()">
+            <input matInput type="text" placeholder="Availability Date" formControlName="availabilityDate" required>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-select formControlName="availabilityTime" placeholder="Availability Time" required>
+              <mat-option *ngFor="let availableTime of availableTimes" [value]="availableTime">
+                {{ availableTime }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+      <ion-row class="second-row">
+        <ion-col col-9>
+          <ion-label text-wrap class="title" required>Request historical usage from utility (required)</ion-label>
+          <p class="sub-des">(Authorize us to request your historical usage on your behalf and analyze it for determining
+            the rate for your account)</p>
+        </ion-col>
+        <ion-col col-3>
+          <ion-row>
+            <ion-toggle formControlName="requestHistoricalUsage" required></ion-toggle>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row class="second-row">
+        <ion-col col-9>
+          <ion-label text-wrap class="title">Start All-Inclusive Auction</ion-label>
+          <p class="sub-des">(Authorize all suppliers to compete in your auction which guarantees that the best results will be accomplished.
+            This is inclusive of all applicable supplier and free of broker pricing)</p>
+        </ion-col>
+        <ion-col col-3>
+          <ion-row>
+            <ion-toggle formControlName="startAllInclusiveAuction"></ion-toggle>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-item text-wrap *ngIf="startNewAuctionValidation && newActionErrorMessage">
+        <ion-label color="danger">{{ newActionErrorMessage }}</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startNewAuctionValidation && !requestHistoricalUsage.valid && (requestHistoricalUsage.dirty || requestHistoricalUsage.touched)">
+        <ion-label color="danger">You must agree to request historical usage to start the auction.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startNewAuctionValidation && !availabilityDate.valid && (availabilityDate.dirty || availabilityDate.touched)">
+        <ion-label color="danger">Please enter your availability date.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startNewAuctionValidation && !availabilityTime.valid && (availabilityTime.dirty || availabilityTime.touched)">
+        <ion-label color="danger">Please enter your availability time.</ion-label>
+      </ion-item>
+
+      <div class="step-btn">
+        <ion-row>
+          <ion-col col-6>
+            <button class="normal-button" ion-button color=secondary (click)="previous()" [disabled]="!startAuctionEnabled">Previous step</button>
+          </ion-col>
+          <ion-col col-6>
+            <button class="normal-button" ion-button color=danger (click)="startAuction()" [disabled]="!startAuctionEnabled">{{ startAuctionText }}</button>
+          </ion-col>
+        </ion-row>
+      </div>
+    </form>
+  </div>
+</ion-content>

@@ -1,0 +1,73 @@
+page-profile {
+    ion-header {
+        .right-icon {
+            color: white;
+            font-size: 12px;
+            font-family: Montserrat-Medium;
+            position: absolute;
+            right: 20px;
+        }
+        .first-block {
+            min-height: 60px;
+            padding-bottom: 20px;
+            background: #0A2A51;
+            align-items: center;
+            flex-direction: column;
+            .img-row {
+                justify-content: center;
+                .profile-img {
+                    position: relative;
+                    svg {
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                    }
+                }
+            }
+            .name {
+                color: white;
+                font-size: 16px;
+                font-family: Montserrat-Bold;
+            }
+            .email {
+                margin-top: 5px;
+                font-size: 12px;
+                font-family: Montserrat-Medium;
+                color: white;
+                margin-top: 5px;
+            }
+        }
+    }
+    ion-content {
+        background: #EAF6FF !important;
+        ion-card {
+            padding: 0!important;
+        }
+
+        .normal-button {
+            background-color: #A3ADB7!important;
+            margin-top: 0px!important;
+        }
+
+        .item-row {
+            background: white;
+            border-radius: 10px;
+            height: 68px;
+            padding-left: 20px;
+            padding-right: 20px;
+            align-items: center;
+            justify-content: space-between;
+            ion-label {
+                color: #43535F;
+                font-size: 16px;
+                font-family: Montserrat-Medium;
+            }
+        }
+
+        .item-row.first-item-row {
+            border-bottom: 1px solid #E5E9EC;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+}

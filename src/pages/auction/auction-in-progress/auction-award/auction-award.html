@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-row class="header-row" (click)="navCtrl.pop()">
+    <ion-row class="header-title">
+      <ion-col col-1>
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </ion-col>
+      <span>
+        {{ rate.product.name }} - {{ rate.term }} Months
+      </span>
+      <ion-col col-1></ion-col>
+    </ion-row>
+  </ion-row>
+</ion-header>
+
+<ion-content padding>
+  <ion-row class="logo-wrap">
+    <img [src]="rate.logo">
+  </ion-row>
+  <ion-row class="detail-box-wrap">
+    <ion-col no-padding col-7>
+      <div class="detail-block">
+        <ion-label class="detail-title">Rate per kWh</ion-label>
+        <ion-row *ngIf="rfqSession.contract.rate">
+          <ion-col col-5>
+            <ion-row>
+              <span class="current-rate-des" [ngClass]="getFontAdjustment(rfqSession.contract.rate)">{{ rfqSession.contract.rate * 100 | currency:'USD':'':'1.2-5' }}&cent;<br>
+                <ion-label>Current</ion-label>
+              </span>
+            </ion-row>
+          </ion-col>
+          <ion-col col-2>
+            <ion-row class="centered-arrow">
+              <ion-icon name="ios-arrow-forward"></ion-icon>
+            </ion-row>
+          </ion-col>
+          <ion-col col-5>
+            <ion-row>
+              <span class="rate-des" [ngClass]="getFontAdjustment(rate.rate)">{{ rate.rate * 100 | currency:'USD':'':'1.2-5' }}&cent;<br>
+                <ion-label>New</ion-label>
+              </span>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="!rfqSession.contract.rate">
+          <ion-col col-12>
+            <ion-row>
+              <span class="rate-des single" [ngClass]="getFontAdjustment(rate.rate)">{{ rate.rate * 100 | currency:'USD':'':'1.2-5' }}&cent;</span>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-col>
+    <ion-col col-5 class="detail-block-right">
+      <span class="title">
+        Term (Duration)
+      </span><br>
+      <span class="date-des">
+        {{ rate.term }} Months
+      </span><br><br *ngIf="rfqSession.contract.rate"><br *ngIf="rfqSession.contract.rate">
+      <span class="title">
+        Est. Savings/Month
+      </span><br>
+      <span class="month-rate-des">
+        {{ rate.savings | currency:'USD':'symbol'}}
+      </span>
+    </ion-col>
+  </ion-row>
+  <ion-label class="title" *ngIf="rate.billingMethod">
+    Billing Method
+  </ion-label>
+  <span class="des" *ngIf="rate.billingMethod">
+    {{ rate.billingMethod }}
+  </span>
+
+  <ion-label class="title">
+    Usage
+  </ion-label>
+  <span class="des">
+    {{ rate.getUsage() }}
+  </span>
+
+  <ion-label class="title">
+    Delivery
+  </ion-label>
+  <span class="des">
+    {{ getServiceTypeName() }} is always distributed and delivered through your local utility company, regardless of your plan.
+  </span>
+
+  <ion-label class="title" *ngIf="rate.greenPercentage">
+    Green Energy
+  </ion-label>
+  <span class="des" *ngIf="rate.greenPercentage">
+    {{ rate.greenPercentage }}%
+  </span>
+
+  <ion-label class="title">
+    Renewal
+  </ion-label>
+  <span class="des" style="padding-bottom: 10px">
+      You'll get an email reminder 30 days before the plan's end date with renewal options, so you
+      can continue to get the best available rate on the market.
+  </span>
+
+</ion-content>
+<ion-footer>
+  <div class="step-btn">
+    <button class="normal-button" ion-button color="Primary" (click)="goContractTerms()">View Contract Terms</button>
+  </div>
+</ion-footer>

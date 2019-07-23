@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-row class="header-row" (click)="navCtrl.pop()">
+    <ion-row class="header-title">
+      <ion-col col-1>
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </ion-col>
+      <span>
+        Risk Tolerance
+      </span>
+      <ion-col col-1></ion-col>
+    </ion-row>
+  </ion-row>
+</ion-header>
+
+<ion-content>
+  <ion-spinner *ngIf="loading"></ion-spinner>
+  <ion-row *ngIf="riskToleranceErrorMessage" text-wrap>
+    <ion-col col-12>
+      <ion-label color="danger">{{ riskToleranceErrorMessage }}</ion-label>
+    </ion-col>
+  </ion-row>
+  <ion-row class="question-row"*ngFor="let question of questions; let i = index" (click)="goAnswer(question, i + 1)">
+    <ion-col col-11>
+      <ion-label class="question">Question {{ i + 1 }}</ion-label>
+      <p class="que-des">{{ question.question }}</p>
+      <ion-label text-wrap color="secondary" style="margin-left: 10px" *ngIf="question.selectedAnswer">{{ question.selectedAnswer.answer }}</ion-label>
+    </ion-col>
+    <ion-col col-1>
+      <ion-row class="dot-arrow">    
+        <ion-icon name="ios-arrow-forward"></ion-icon>  
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="finishErrorMessage" text-wrap>
+    <ion-col col-12>
+      <ion-item>
+        <ion-label color="danger">{{ finishErrorMessage }}</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-content>

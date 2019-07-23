@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-row class="header-row" (click)="goBack()">
+    <ion-row class="header-title">
+      <ion-col col-1>
+        <ion-icon name="ios-arrow-back" *ngIf="!passwordExpired"></ion-icon>
+      </ion-col>
+      <span>
+        Profile Change Password
+      </span>
+      <ion-col col-1></ion-col>
+    </ion-row>
+  </ion-row>
+</ion-header>
+
+
+<ion-content>
+  <form [formGroup]="passwordChangeForm" *ngIf="passwordChangeForm">
+
+    <div class="input-box-md">
+      <mat-form-field class="full-width" *ngIf="!passwordExpired">
+        <input matInput placeholder="Old Password" [type]="hide ? 'password' : 'text'" formControlName="oldPassword" required>
+        <mat-icon matSuffix (click)="hide = !hide">{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </mat-form-field>
+      <mat-form-field class="full-width" [ngClass]="{ 'with-password-hint': passwordFocused }">
+        <input matInput placeholder="New Password" (focus)="passwordFocused = true" [type]="nHide ? 'password' : 'text'" formControlName="password" required>
+        <mat-icon matSuffix (click)="nHide = !nHide">{{ nHide ? 'visibility_off' : 'visibility' }}</mat-icon>
+        <mat-hint text-wrap class="with-validation" *ngIf="passwordFocused">
+          <mat-icon matPrefix class="password-success" *ngIf="!password.errors?.required && !password.errors?.minlength">check</mat-icon>
+          <mat-icon matPrefix class="password-error" *ngIf="password.errors?.required || password.errors?.minlength">clear</mat-icon>
+          At least 8 characters
+          <br>
+          <mat-icon matPrefix class="password-success" *ngIf="!password.errors?.required && !password.errors?.hasNumber">check</mat-icon>
+          <mat-icon matPrefix class="password-error" *ngIf="password.errors?.required || password.errors?.hasNumber">clear</mat-icon>
+          At least 1 number
+          <br>
+          <mat-icon matPrefix class="password-success" *ngIf="!password.errors?.required && !password.errors?.hasLetter">check</mat-icon>
+          <mat-icon matPrefix class="password-error" *ngIf="password.errors?.required || password.errors?.hasLetter">clear</mat-icon>
+          At least 1 letter
+          <br>
+          <mat-icon matPrefix class="password-success" *ngIf="!password.errors?.required && !password.errors?.hasUpperCase">check</mat-icon>
+          <mat-icon matPrefix class="password-error" *ngIf="password.errors?.required || password.errors?.hasUpperCase">clear</mat-icon>
+          At least 1 upper-case
+          <br>
+          <mat-icon matPrefix class="password-success" *ngIf="!password.errors?.required && !password.errors?.hasLowerCase">check</mat-icon>
+          <mat-icon matPrefix class="password-error" *ngIf="password.errors?.required || password.errors?.hasLowerCase">clear</mat-icon>
+          At least 1 lower-case
+          <br>
+          <mat-icon matPrefix class="password-success" *ngIf="!password.errors?.required && !password.errors?.hasSpecialCharacters">check</mat-icon>
+          <mat-icon matPrefix class="password-error" *ngIf="password.errors?.required || password.errors?.hasSpecialCharacters">clear</mat-icon>
+          At least 1 special character
+          <br>
+          <mat-icon matPrefix class="password-success" *ngIf="!password.errors?.required && !password.errors?.hasPassword">check</mat-icon>
+          <mat-icon matPrefix class="password-error" *ngIf="password.errors?.required || password.errors?.hasPassword">clear</mat-icon>
+          May not contain any combination of the word "password"
+        </mat-hint>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Retype New Password" (focus)="cpasswordFocused = true" [type]="cHide ? 'password' : 'text'" formControlName="cpassword" required>
+        <mat-icon matSuffix (click)="cHide = !cHide">{{ cHide ? 'visibility_off' : 'visibility' }}</mat-icon>
+        <mat-hint text-wrap class="with-validation" *ngIf="cpasswordFocused">
+          <mat-icon matPrefix class="password-success" *ngIf="!passwordChangeForm.errors?.passwordMismatch">check</mat-icon>
+          <mat-icon matPrefix class="password-error" *ngIf="passwordChangeForm.errors?.passwordMismatch">clear</mat-icon>
+          Passwords must match
+        </mat-hint>
+      </mat-form-field>
+    </div>
+
+    <ion-item text-wrap *ngIf="startPasswordChangeValidation && passwordChangeErrorMessage" text-wrap>
+      <ion-label color="danger">{{ passwordChangeErrorMessage }}</ion-label>
+    </ion-item>
+
+    <div class="submit-btn">
+      <button class="normal-button" ion-button color=secondary [disabled]="!submitButtonEnabled" (click)="submit()">{{ submitButtonText }}</button>
+    </div>
+  </form>
+</ion-content>

@@ -1,0 +1,120 @@
+<ion-header>
+  <ion-row class="header-row" (click)="navCtrl.pop()">
+    <ion-row class="header-title">
+      <ion-col col-1>
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </ion-col>
+      <span>
+        Edit Profile
+      </span>
+      <ion-col col-1>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-header>
+
+
+<ion-content>
+  <form [formGroup]="profileEditForm" *ngIf="profileEditForm">
+    <div class="input-box-md">
+      <mat-form-field class="full-width">
+        <input matInput type="text" placeholder="First Name" formControlName="firstName" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="text" placeholder="Last Name" formControlName="lastName" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="text" placeholder="Title" formControlName="title">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="text" placeholder="Company Name" formControlName="DBAName" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="email" placeholder="Email" formControlName="email" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="tel" placeholder="Mobile Phone" formControlName="phone" [textMask]="{ mask: Constants.masks.phone }" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="tel" placeholder="Direct Office Phone" formControlName="phone2" [textMask]="{ mask: Constants.masks.phone }" required>
+      </mat-form-field>
+      <ion-row>
+        <span>Mailing Address</span>
+      </ion-row>
+      <mat-form-field class="full-width">
+        <input matInput type="text" placeholder="Street" formControlName="address1" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="text" placeholder="Apt/Suite/Unit" formControlName="address2">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="text" placeholder="Zip Code" formControlName="zipCode" (keyup)="getZipCode(false)" maxlength="5" required>
+      </mat-form-field>
+      <ion-label color="info" *ngIf="zipCodeLoading">Validating zip code...</ion-label>
+      <ion-row *ngIf="zipCodeErrorMessage" text-wrap>
+        <ion-col col-12>
+          <ion-label color="danger">{{ zipCodeErrorMessage }}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-spinner *ngIf="zipCodeLoading"></ion-spinner>
+      <mat-form-field class="full-width" *ngIf="!zipCodeLoading && citiesInZipCode">
+        <mat-select formControlName="city" placeholder="City" required>
+          <mat-option *ngFor="let city of citiesInZipCode" [value]="city">
+            {{ city }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="full-width" *ngIf="!zipCodeLoading && stateID.value && stateID.value != 'null'">
+        <input matInput type="text" placeholder="State" formControlName="stateShort">
+      </mat-form-field>
+    </div>
+
+    <ion-item *ngIf="startProfileEditFormValidation && profileEditErrorMessage" text-wrap>
+      <ion-label color="danger">{{ profileEditErrorMessage }}</ion-label>
+    </ion-item>
+
+    <ion-item text-wrap *ngIf="startProfileEditFormValidation && !firstName.valid && (firstName.dirty || firstName.touched)">
+      <ion-label color="danger">Please enter your first name.</ion-label>
+    </ion-item>
+
+    <ion-item text-wrap *ngIf="startProfileEditFormValidation && !lastName.valid && (lastName.dirty || lastName.touched)">
+      <ion-label color="danger">Please enter your last name.</ion-label>
+    </ion-item>
+
+    <ion-item text-wrap *ngIf="startProfileEditFormValidation && !DBAName.valid && (DBAName.dirty || DBAName.touched)">
+      <ion-label color="danger">Please enter your Company Name.</ion-label>
+    </ion-item>
+
+    <ion-item text-wrap *ngIf="startProfileEditFormValidation && !email.valid && (email.dirty || email.touched)">
+      <ion-label color="danger">Please enter a valid email.</ion-label>
+    </ion-item>
+
+    <ion-item text-wrap *ngIf="startProfileEditFormValidation && !phone.valid && (phone.dirty || phone.touched)" text-wrap>
+      <ion-label color="danger">Please enter a valid phone number for your Cell Phone.</ion-label>
+    </ion-item>
+
+    <ion-item text-wrap *ngIf="startProfileEditFormValidation && !phone2.valid && (phone2.dirty || phone2.touched)" text-wrap>
+      <ion-label color="danger">Please enter a valid phone number for your company.</ion-label>
+    </ion-item>
+
+    <ion-item text-wrap *ngIf="startProfileEditFormValidation && !address1.valid && (address1.dirty || address1.touched)">
+      <ion-label color="danger">Please enter your mailing address.</ion-label>
+    </ion-item>
+
+    <ion-item text-wrap *ngIf="startProfileEditFormValidation && !city.valid && (city.dirty || city.touched)">
+      <ion-label color="danger">Please enter your mailing address city.</ion-label>
+    </ion-item>
+
+    <ion-item text-wrap *ngIf="startProfileEditFormValidation && !stateID.valid && (stateID.dirty || stateID.touched)">
+      <ion-label color="danger">Please choose your mailing address state.</ion-label>
+    </ion-item>
+
+    <ion-item text-wrap *ngIf="startProfileEditFormValidation && !zipCode.valid && (zipCode.dirty || zipCode.touched)">
+      <ion-label color="danger">Please choose your mailing address zip code.</ion-label>
+    </ion-item>
+
+    <div class="submit-btn">
+      <button class="normal-button" ion-button color=secondary [disabled]="!saveButtonEnabled" (click)="save()">{{ saveButtonText }}</button>
+    </div>
+  </form>
+</ion-content>

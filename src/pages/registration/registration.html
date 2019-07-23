@@ -1,0 +1,291 @@
+<ion-header>
+  <ion-row class="header-row" (click)="goBack()">
+    <ion-row class="header-title">
+      <ion-col col-1>
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </ion-col>
+      <span>
+        Registration
+      </span>
+      <ion-col col-1></ion-col>
+    </ion-row>
+  </ion-row>
+
+  <div *ngIf="stepIndex==1" class="step">
+    <svg xmlns="http://www.w3.org/2000/svg" style="width: 100%" height="30.5" viewBox="0 0 283.754 30.5">
+      <g id="Group_787" data-name="Group 787" transform="translate(0 -99.5)">
+        <g id="Ellipse_8" data-name="Ellipse 8" transform="translate(195 99.5) rotate(90)" fill="#8ADB20" stroke="rgba(255,255,255,0.2)"
+          stroke-width="1.5">
+          <circle cx="6.5" cy="6.5" r="6.5" stroke="none" />
+          <circle cx="6.5" cy="6.5" r="5.75" fill="none" />
+        </g>
+        <g id="Ellipse_9" data-name="Ellipse 9" transform="translate(81 99.5) rotate(90)" fill="#8ADB20" stroke="#8ADB20"
+          stroke-width="1.5">
+          <circle cx="6.5" cy="6.5" r="6.5" stroke="none" />
+          <circle cx="6.5" cy="6.5" r="5.75" fill="none" />
+        </g>
+        <line id="Line_29" data-name="Line 29" x1="100" transform="translate(81.5 106)" fill="none" stroke="rgba(255,255,255,0.2)"
+          stroke-linecap="round" stroke-width="1.5" stroke-dasharray="1 5" />
+        <text id="Contact_Info" data-name="Contact Info" transform="translate(74.763 127)" fill="#8ADB20" font-size="10"
+          font-family="Montserrat-SemiBold">
+          <tspan x="-27.122" y="0">Contact Info</tspan>
+        </text>
+        <text id="Security_Settings" data-name="Security Settings" transform="translate(145 127)" fill="rgba(255,255,255,0.4)"
+          font-size="10" font-family="Montserrat-SemiBold">
+          <tspan x="0" y="0">Security Settings</tspan>
+        </text>
+      </g>
+    </svg>
+
+  </div>
+  <div *ngIf="stepIndex==2" class="step">
+    <svg xmlns="http://www.w3.org/2000/svg" style="width: 100%" height="30.5" viewBox="0 0 283.754 30.5">
+      <g id="Group_936" data-name="Group 936" transform="translate(0 220.5)">
+        <g id="Ellipse_8" data-name="Ellipse 8" transform="translate(195 -220.5) rotate(90)" fill="#8ADB20" stroke="#8ADB20"
+          stroke-width="1.5">
+          <circle cx="6.5" cy="6.5" r="6.5" stroke="none" />
+          <circle cx="6.5" cy="6.5" r="5.75" fill="none" />
+        </g>
+        <g id="Ellipse_9" data-name="Ellipse 9" transform="translate(81 -220.5) rotate(90)" fill="#8ADB20" stroke="#8ADB20"
+          stroke-width="1.5">
+          <circle cx="6.5" cy="6.5" r="6.5" stroke="none" />
+          <circle cx="6.5" cy="6.5" r="5.75" fill="none" />
+        </g>
+        <line id="Line_29" data-name="Line 29" x1="100" transform="translate(81.5 -214)" fill="none" stroke="#8ADB20"
+          stroke-linecap="round" stroke-width="1.5" stroke-dasharray="1 5" />
+        <text id="Contact_Info" data-name="Contact Info" transform="translate(74.763 -193)" fill="#8ADB20" font-size="10"
+          font-family="Montserrat-SemiBold">
+          <tspan x="-27.122" y="0">Contact Info</tspan>
+        </text>
+        <text id="Security_Settings" data-name="Security Settings" transform="translate(145 -193)" fill="#8ADB20"
+          font-size="10" font-family="Montserrat-SemiBold">
+          <tspan x="0" y="0">Security Settings</tspan>
+        </text>
+      </g>
+    </svg>
+  </div>
+</ion-header>
+
+
+<ion-content>
+  <ion-spinner *ngIf="loading"></ion-spinner>
+  <ion-row *ngIf="registrationErrorMessage" text-wrap>
+    <ion-col col-12>
+      <ion-label color="danger">{{ registrationErrorMessage }}</ion-label>
+    </ion-col>
+  </ion-row>
+  <form *ngIf="!loading" [formGroup]="step1RegistrationForm" [hidden]="!step1RegistrationForm">
+    <!-- first step start -->
+    <div class="first-step" [hidden]="stepIndex !== 1">
+
+      <div class="input-box-md">
+        <mat-form-field class="full-width">
+          <input matInput type="text" placeholder="First Name" formControlName="firstName" required>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput type="text" placeholder="Last Name" formControlName="lastName" required>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput type="text" placeholder="Title" formControlName="title">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput type="text" placeholder="Company Name" formControlName="DBAName" required>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput type="email" placeholder="Email" formControlName="email" required>
+        </mat-form-field>
+        <mat-form-field class="full-width" [ngClass]="{ 'with-password-hint': passwordFocused }">
+          <input matInput placeholder="Password" (focus)="passwordFocused = true" [type]="hide ? 'password' : 'text'" formControlName="password" required>
+          <mat-icon matSuffix (click)="hide = !hide">{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+          <mat-hint text-wrap class="with-validation" *ngIf="passwordFocused">
+            <mat-icon matPrefix class="password-success" *ngIf="!password.errors?.required && !password.errors?.minlength">check</mat-icon>
+            <mat-icon matPrefix class="password-error" *ngIf="password.errors?.required || password.errors?.minlength">clear</mat-icon>
+            At least 8 characters
+            <br>
+            <mat-icon matPrefix class="password-success" *ngIf="!password.errors?.required && !password.errors?.hasNumber">check</mat-icon>
+            <mat-icon matPrefix class="password-error" *ngIf="password.errors?.required || password.errors?.hasNumber">clear</mat-icon>
+            At least 1 number
+            <br>
+            <mat-icon matPrefix class="password-success" *ngIf="!password.errors?.required && !password.errors?.hasLetter">check</mat-icon>
+            <mat-icon matPrefix class="password-error" *ngIf="password.errors?.required || password.errors?.hasLetter">clear</mat-icon>
+            At least 1 letter
+            <br>
+            <mat-icon matPrefix class="password-success" *ngIf="!password.errors?.required && !password.errors?.hasUpperCase">check</mat-icon>
+            <mat-icon matPrefix class="password-error" *ngIf="password.errors?.required || password.errors?.hasUpperCase">clear</mat-icon>
+            At least 1 upper-case
+            <br>
+            <mat-icon matPrefix class="password-success" *ngIf="!password.errors?.required && !password.errors?.hasLowerCase">check</mat-icon>
+            <mat-icon matPrefix class="password-error" *ngIf="password.errors?.required || password.errors?.hasLowerCase">clear</mat-icon>
+            At least 1 lower-case
+            <br>
+            <mat-icon matPrefix class="password-success" *ngIf="!password.errors?.required && !password.errors?.hasSpecialCharacters">check</mat-icon>
+            <mat-icon matPrefix class="password-error" *ngIf="password.errors?.required || password.errors?.hasSpecialCharacters">clear</mat-icon>
+            At least 1 special character
+            <br>
+            <mat-icon matPrefix class="password-success" *ngIf="!password.errors?.required && !password.errors?.hasPassword">check</mat-icon>
+            <mat-icon matPrefix class="password-error" *ngIf="password.errors?.required || password.errors?.hasPassword">clear</mat-icon>
+            May not contain any combination of the word "password"
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Retype Password" (focus)="cpasswordFocused = true" [type]="cHide ? 'password' : 'text'" formControlName="cpassword" required>
+          <mat-icon matSuffix (click)="cHide = !cHide">{{ cHide ? 'visibility_off' : 'visibility' }}</mat-icon>
+          <mat-hint text-wrap class="with-validation" *ngIf="cpasswordFocused">
+            <mat-icon matPrefix class="password-success" *ngIf="!step1RegistrationForm.errors?.passwordMismatch">check</mat-icon>
+            <mat-icon matPrefix class="password-error" *ngIf="step1RegistrationForm.errors?.passwordMismatch">clear</mat-icon>
+            Passwords Must Match
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput type="tel" placeholder="Mobile Phone" formControlName="phone" [textMask]="{ mask: Constants.masks.phone }" required>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput type="tel" placeholder="Direct Office Phone" formControlName="phone2" [textMask]="{ mask: Constants.masks.phone }" required>
+        </mat-form-field>
+        <ion-row>
+          <span>Mailing Address</span>
+        </ion-row>
+        <mat-form-field class="full-width">
+          <input matInput type="text" placeholder="Street" formControlName="address1" required>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput type="text" placeholder="Apt/Suite/Unit" formControlName="address2">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput type="text" placeholder="Zip Code" formControlName="zipCode" (keyup)="getZipCode()" maxlength="5" required>
+        </mat-form-field>
+        <ion-label color="info" *ngIf="zipCodeLoading">Validating zip code...</ion-label>
+        <ion-spinner *ngIf="zipCodeLoading"></ion-spinner>
+        <mat-form-field class="full-width" *ngIf="!zipCodeLoading && citiesInZipCode">
+          <mat-select formControlName="city" placeholder="City" required>
+            <mat-option *ngFor="let city of citiesInZipCode" [value]="city">
+              {{ city }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="full-width" *ngIf="!zipCodeLoading && stateID.value && stateID.value != 'null'">
+          <input matInput type="text" placeholder="State" formControlName="stateShort">
+        </mat-form-field>
+      </div>
+
+      <ion-item *ngIf="step1ErrorMessage" text-wrap>
+        <ion-label color="danger">{{ step1ErrorMessage }}</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startStep1Validation && !firstName.valid && (firstName.dirty || firstName.touched)">
+        <ion-label color="danger">Please enter your first name.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startStep1Validation && !lastName.valid && (lastName.dirty || lastName.touched)">
+        <ion-label color="danger">Please enter your last name.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startStep1Validation && !DBAName.valid && (DBAName.dirty || DBAName.touched)">
+        <ion-label color="danger">Please enter your Company Name.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startStep1Validation && !email.valid && (email.dirty || email.touched)">
+        <ion-label color="danger">Please enter a valid email.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startStep1Validation && !phone.valid && (phone.dirty || phone.touched)" text-wrap>
+        <ion-label color="danger">Please enter a valid phone number for your Cell Phone.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startStep1Validation && !phone2.valid && (phone2.dirty || phone2.touched)" text-wrap>
+        <ion-label color="danger">Please enter a valid phone number for your company.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startStep1Validation && !address1.valid && (address1.dirty || address1.touched)">
+        <ion-label color="danger">Please enter your mailing address.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startStep1Validation && !city.valid && (city.dirty || city.touched)">
+        <ion-label color="danger">Please enter your mailing address city.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startStep1Validation && !stateID.valid && (stateID.dirty || stateID.touched)">
+        <ion-label color="danger">Please choose your mailing address state.</ion-label>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="startStep1Validation && !zipCode.valid && (zipCode.dirty || zipCode.touched)">
+        <ion-label color="danger">Please choose your mailing address zip code.</ion-label>
+      </ion-item>
+
+      <div class="step-btn">
+        <button class="normal-button" ion-button color=secondary (click)="next()" [disabled]="zipCodeLoading">Next step</button>
+      </div>
+    </div>
+    <!-- first step end -->
+  </form>
+  <form [formGroup]="step2RegistrationForm" [hidden]="!step2RegistrationForm">
+    <!-- third step start -->
+    <div class="third-step" [hidden]="stepIndex !== 2">
+
+      <div class="input-box-md">
+        <mat-form-field class="full-width with-hint">
+          <input matInput type="text" placeholder="E-Signature" formControlName="signature" required>
+          <mat-hint>Saves your signature and reuses it in the future to save you time.</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="full-width with-hint">
+          <input matInput type="text" class="initials" placeholder="Initials" formControlName="initials" maxlength="5" required>
+          <mat-hint>Saves your initials and reuses it in the future to save you time.</mat-hint>
+        </mat-form-field>
+      </div>
+      <div [ngClass]="isIos() ? 'line-edge-ios' : 'line-edge-md'"></div>
+      <div class="toggle-box">
+        <ion-row>
+          <ion-toggle formControlName="autoRenewContracts"></ion-toggle>
+          <span>Auto Renew</span>
+          <components-question-icon style="margin-left: 10px" (click)="showAutoRenewModal()"></components-question-icon>
+        </ion-row>
+        <ion-row>
+          <ion-toggle formControlName="activateNotifications"></ion-toggle>
+          <span>Activate Notifications</span>
+          <components-question-icon style="margin-left: 10px" (click)="showActivateNotificationsModal()"></components-question-icon>
+        </ion-row>
+      </div>
+
+      <ion-row class="go-arrow-configure" [ngClass]="{ 'go-arrow-configure-less-padding': isTosAccepted?.value, 'go-arrow-configure-padding': !isTosAccepted?.value }" (click)="goTerms()">
+        <ion-icon class="accepted" name="ios-checkmark" *ngIf="isTosAccepted?.value"></ion-icon>
+        <span>Terms & Conditions</span>
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </ion-row>
+
+      <ion-row *ngIf="step2ErrorMessage" text-wrap>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label color="danger">{{ step2ErrorMessage }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-item *ngIf="startStep2Validation && !initials.valid && (initials.dirty || initials.touched)">
+        <ion-label color="danger" *ngIf="initials.errors?.maxlength">Your initials cannot exceed 5 characters</ion-label>
+        <ion-label color="danger" *ngIf="initials.errors?.required">Please enter your initials.</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="startStep2Validation && !signature.valid && (signature.dirty || signature.touched)">
+        <ion-label color="danger">Please enter your e-signature.</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="startStep2Validation && !isTosAccepted.valid && (isTosAccepted.dirty || isTosAccepted.touched)">
+        <ion-label color="danger">Please read and accept the terms of service.</ion-label>
+      </ion-item>
+
+      <div class="step-btn">
+        <ion-row>
+          <ion-col col-6>
+            <button class="normal-button" ion-button color=secondary [disabled]="!finishEnabled" (click)="previous()">Previous step</button>
+          </ion-col>
+
+          <ion-col col-6>
+            <button class="normal-button" ion-button color=danger [disabled]="!finishEnabled" (click)="finish()">{{ finishText }}</button>
+          </ion-col>
+        </ion-row>
+      </div>
+
+    </div>
+    <!-- third step end -->
+  </form>
+</ion-content>

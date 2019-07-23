@@ -1,0 +1,253 @@
+page-auction-create-contract {
+    ion-header {
+        .step {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+    }
+    
+    ion-content {
+        background: white!important;
+        .c-phone {
+            padding-left: 10px;
+        }
+        .step-btn {
+            background: #EAF6FF;
+            padding: 0px 10px 20px 10px;
+            margin-bottom: 0;
+            ion-label {
+                margin-bottom: 0;
+                color: #A3ADB7;
+                font-size: 12px;
+                font-family: Montserrat-Medium;
+                text-align: center;
+                margin-top: 0;
+                padding-top: 20px;
+            }
+            .error-message {
+                background: #EAF6FF;
+                padding-left: 10px;
+            }
+            .go-arrow-configure {
+                color: #43535F;
+                font-size: 12px;
+                font-family: Montserrat-Medium;
+                justify-content: space-between;
+                align-items: center;
+                background: #EAF6FF;
+                ion-icon {
+                    color: #B5BEC5;
+                    font-size: 19px;
+                    font-weight: 800;
+                    margin-right: 0;
+                }
+                border-bottom: 1px solid #B6C0C9;
+    
+                &.go-arrow-configure-less-padding {
+                    padding: 8px 15px 8px 15px;
+                }
+                &.go-arrow-configure-padding {
+                    padding: 15px;
+                }
+    
+                .accepted {
+                    color: green;
+                    font-size: 30px;
+                }
+            }
+        }
+        .card-wrap {
+            padding: 7.5px 15px 50px 15px;
+            ion-card {
+                padding: 0;
+                margin-bottom: 0 !important;
+                border: 1px solid #8ADB20;
+                .left-col {
+                    background: #8ADB20;
+                    ion-row {
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
+            }
+            .go-arrow-configure {
+                color: #43535F;
+                font-size: 12px;
+                font-family: Montserrat-Bold;
+                padding: 15px 10px;
+                justify-content: space-between;
+                align-items: center;
+                ion-icon {
+                    color: #B5BEC5;
+                    font-size: 19px;
+                    font-weight: 800;
+                    margin-right: 0;
+                }
+                .des {
+                    font-size: 16px;
+                    color: #43535F;
+                    font-family: Montserrat-Medium;
+                }
+                border-bottom: 1px solid #B6C0C9;
+            }
+        }
+
+        .first-step {
+            #conditionframe {
+                //set the height to 100% of the viewport less the height of the header
+                height: calc( 100vh - 206px);
+
+                //set the width to 100% of the viewport width
+                width: 100vw;
+
+                //remove border, padding, margin
+                border: none;
+                padding: 0;
+                margin: 0;
+                margin-top: -62px;
+            }
+        }
+
+        .third-step {
+            .go-arrow {
+                padding: 10px 15px 10px 15px;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 1px solid #E5E9EC;
+                border-top: 1px solid #E5E9EC;
+                color: #43535F;
+
+                ion-icon {
+                    color: #B5BEC5;
+                    font-size: 19px;
+                    font-weight: 800;
+                    margin-right: 0;
+                }
+
+                .go-row {
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .top-des {
+                        font-size: 12px;
+                        font-family: Montserrat-Bold;
+                    }
+
+                    .card-arrow {
+                        text-align: right;
+                    }
+
+                    .-icon {
+                        justify-content: space-between;
+                        align-items: center;
+
+                        fa-icon {
+                            font-size: 28px;
+                        }
+                    }
+                }
+            }
+
+            .third-detail-wrap {
+                padding-left: 18px;
+                padding-bottom: 20px;
+                padding-top: 25px;
+
+                .detail {
+                    .detail-title {
+                        margin-top: 0 !important;
+                        margin-bottom: 0 !important;
+                        color: #A3ADB7;
+                        font-size: 9px;
+                        font-family: Montserrat-SemiBold;
+                    }
+
+                    .detail-des {
+                        margin-top: 0 !important;
+                        margin-bottom: 0 !important;
+                        color: #43535F;
+                        font-size: 12px;
+                        font-family: Montserrat-Bold;
+                    }
+
+                    .detail-des.hilited {
+                        margin-top: 0 !important;
+                        margin-bottom: 0 !important;
+                        font-size: 12px;
+                        font-family: Montserrat-Bold;
+                        color: #8ADB20 !important;
+                    }
+
+                    .big {
+                        color: #8ADB20;
+                        font-family: Montserrat-Medium !important;
+                        font-size: 42px !important;
+                    }
+
+                    .top {
+                        padding-top: 10px;
+                        color: #8ADB20;
+                    }
+
+                    .center {
+                        text-align: center !important;
+                        width: 75%;
+                        margin: auto;
+                        font-size: 12px;
+                        line-height: 14px;
+                    }
+                }
+            }
+
+            .charges {
+                padding: 15px;
+                background: #EAF6FF;
+                font-size: 12px;
+                font-family: Montserrat-Medium;
+                color: #43535F;
+
+                span {
+                    font-size: 16px !important;
+                }
+            }
+        }
+    }
+    ion-footer {
+        .error-message {
+            background: #EAF6FF;
+            padding-left: 10px;
+        }
+        .step-btn-wrapper {
+            background: #E9E8ED;
+        }
+        .step-btn {
+            background: #EAF6FF;
+            padding: 0px 10px 20px 10px;
+            margin-bottom: 0;
+        }
+        .go-arrow-configure {
+            color: #43535F;
+            font-size: 12px;
+            font-family: Montserrat-Medium;
+            padding: 10px 15px;
+            justify-content: space-between;
+            align-items: center;
+            background: #EAF6FF;
+
+            ion-icon {
+                color: #B5BEC5;
+                font-size: 19px;
+                font-weight: 800;
+                margin-right: 0;
+            }
+
+            border-bottom: 1px solid #B6C0C9;
+
+            .accepted {
+                color: green;
+                font-size: 30px;
+            }
+        }
+    }
+}

@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-row class="header-row" (click)="navCtrl.pop()">
+    <ion-row class="header-title">
+      <ion-col col-1>
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </ion-col>
+      <span style="text-align: center">
+        {{ selectedQuestion.question }}
+      </span>
+      <ion-col col-1></ion-col>
+    </ion-row>
+  </ion-row>
+</ion-header>
+
+<ion-content>
+  <ion-row *ngFor="let answer of selectedQuestion.answers; let i = index"
+    [ngClass]="answer.answer == selectedQuestion.selectedAnswer?.answer ? 'question-row active' : 'question-row'"
+    (click)="selectAnswer(answer)">
+    <ion-col col-10>
+      <p class="que-des">{{ answer.answer }}</p>
+    </ion-col>
+    <ion-col col-2>
+      <ion-row class="dot-arrow">
+        <ion-icon name="ios-checkmark"></ion-icon>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -1,0 +1,20 @@
+page-profile-change-pass {  
+  ion-header {
+      .right-icon {
+          color: white;
+          font-size: 12px;
+          font-family: Montserrat-Medium;
+          position: absolute;
+          right: 20px;
+      }
+  }
+  ion-content {
+      background: white!important;
+      .submit-btn {
+        background: #EAF6FF;
+        width: 100%;
+        padding: 15px;
+        padding-top: 0;
+      }
+  }
+}

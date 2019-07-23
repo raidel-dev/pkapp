@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-row class="header-row" (click)="navCtrl.pop()">
+    <ion-row class="header-title">
+      <ion-col col-1>
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </ion-col>
+      <span>
+        Billing Info
+      </span>
+      <ion-col col-1>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-header>
+
+
+<ion-content>
+  <ion-spinner *ngIf="loading"></ion-spinner>
+  <form [formGroup]="billingInfoForm" [hidden]="loading">
+    <div [ngClass]="{ 'input-box-ios': isIos(), 'input-box-md': !isIos() }">
+      <span *ngIf="existingCard">Credit Card</span>
+      <ion-card *ngIf="existingCard">
+        <ion-row>
+          <ion-col col-12>
+            {{ existingCard.brand }}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            XXXX XXXX XXXX {{ existingCard.last4 }}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            Expires: {{ existingCard.exp_month }}/{{ existingCard.exp_year }}
+          </ion-col>
+        </ion-row>
+      </ion-card>
+      <!-- card number -->
+      <span>New Card Number</span>
+      <ion-row>
+        <ion-col col-12>
+          <div id="card-element">
+            <!-- a Stripe Element will be inserted here. -->
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-label text-wrap>Your card will not be charged at this time. We require a payment method to be kept on file for future transactions</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <span>Billing Address</span>
+      </ion-row>
+      <mat-form-field class="full-width">
+        <input matInput type="text" placeholder="Address" formControlName="billingAddress1" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="text" placeholder="Apt, Suite" formControlName="billingAddress2">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="text" placeholder="Zip Code" formControlName="billingZipCode" (keyup)="getBillingZipCode()" maxlength="5" required>
+      </mat-form-field>
+      <ion-label color="info" *ngIf="loadingBillingZipCode">Validating zip code...</ion-label>
+      <ion-row *ngIf="billingZipCodeErrorMessage" text-wrap>
+        <ion-col col-12>
+          <ion-label color="danger">{{ billingZipCodeErrorMessage }}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-spinner *ngIf="loadingBillingZipCode"></ion-spinner>
+      <mat-form-field class="full-width" *ngIf="!loadingBillingZipCode && billingCitiesInZipCode">
+        <mat-select formControlName="billingCity" placeholder="City" required>
+          <mat-option *ngFor="let city of billingCitiesInZipCode" [value]="city">
+            {{ city }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="full-width" *ngIf="!loadingBillingZipCode && billingStateID.value && billingStateID.value != 'null'">
+        <input matInput type="text" placeholder="State" formControlName="billingStateShort">
+      </mat-form-field>
+    </div>
+
+    <ion-row *ngIf="startBillingInfoValidation && billingInfoErrorMessage" text-wrap>
+      <ion-col col-12>
+        <ion-label color="danger">{{ billingInfoErrorMessage }}</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-item text-wrap *ngIf="startBillingInfoValidation && !billingAddress1.valid && (billingAddress1.dirty || billingAddress1.touched)">
+      <ion-label color="danger">Please enter your billing address.</ion-label>
+    </ion-item>
+
+    <ion-item text-wrap *ngIf="startBillingInfoValidation && !billingCity.valid && (billingCity.dirty || billingCity.touched)">
+      <ion-label color="danger">Please enter your billing address city.</ion-label>
+    </ion-item>
+
+    <ion-item text-wrap *ngIf="startBillingInfoValidation && !billingStateID.valid && (billingStateID.dirty || billingStateID.touched)">
+      <ion-label color="danger">Please choose your billing address state.</ion-label>
+    </ion-item>
+
+    <ion-item text-wrap *ngIf="startBillingInfoValidation && !billingZipCode.valid && (billingZipCode.dirty || billingzipCode.touched)">
+      <ion-label color="danger">Please enter your billing address zipcode.</ion-label>
+    </ion-item>
+
+    <div class="step-btn">
+      <ion-row>
+        <ion-col col-12>
+          <button class="normal-button" ion-button color=secondary [disabled]="!saveButtonEnabled" (click)="save()">{{ saveButtonText }}</button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </form>
+</ion-content>

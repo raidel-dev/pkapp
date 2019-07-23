@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-row class="header-row" (click)="navCtrl.pop()">
+    <ion-row class="header-title" >
+      <ion-col col-1>
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </ion-col>
+      <span>
+          {{ contract.customer?.DBAName }}
+      </span>
+      <ion-col col-1>
+        <div class="right-icon">
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+  <ion-row class="header-detail-wrap">
+    <ion-row class="header-detail">
+      <ion-col no-padding col-5>
+        <span class="header-detail-title" no-padding>Invoice Total</span><br>
+        <span class="header-detail-des invoice" no-padding>{{ contract.getInvoiceTotal() | currency:'USD' }}</span>
+        <p></p>
+        <span class="header-detail-title" no-padding>Payment Total</span><br>
+        <span class="header-detail-des" no-padding>{{ contract.getInvoiceTotal() | currency:'USD' }}</span>
+
+      </ion-col>
+      <ion-col no-padding col-7>
+        <span class="header-detail-title" no-padding>Balance Due</span><br>
+        <ion-row class="header-detail-des">
+          <span class="big" no-padding>${{ getMainPart(contract.getInvoiceTotal()) }}</span>
+          <div class="top">.{{ getDecimalPart(contract.getInvoiceTotal()) }}</div>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-header>
+
+<ion-content padding>
+  <ion-spinner *ngIf="loading"></ion-spinner>
+  <ion-card *ngFor="let location of contract.locations | locationsWithInvoice">
+    <ion-row class="top-row">
+      <ion-col col-11>
+        <div class="item-des" text-wrap>
+          <ion-label class="loc-row" no-margin>{{ location.address1 }} {{ location.address2 }}</ion-label>
+          <ion-label class="loc-row" no-margin>{{ location.city }}, {{ location.state?.stateShort }} {{ location.zipCode }}</ion-label>
+          <ion-label class="acc-row" no-margin>Account#: {{ location.utilityAccountNum }}</ion-label>
+        </div>
+      </ion-col>
+      <ion-col col-5 *ngIf="!location.invoice?.isPaid">
+      </ion-col>
+      <ion-col col-1>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="detail-block">
+      <ion-col col-6>
+        <span class="detail-title" no-padding>Bill Period Start</span><br>
+        <span class="detail-des" no-padding>{{ location.invoice?.billPeriodStartDate | date:'shortDate' }}</span>
+        <p></p>
+        <span class="detail-title" no-padding>Due Date</span><br>
+        <span class="detail-des" no-padding>{{ location.invoice?.dueDate | date:'shortDate' }}</span>
+      </ion-col>
+      <ion-col col-6>
+        <span class="detail-title" no-padding>Bill Period End</span><br>
+        <span class="detail-des" no-padding>{{ location.invoice?.billPeriodEndDate | date:'shortDate' }}</span>
+        <p></p>
+        <span class="detail-title" no-padding>Days until bill due</span><br>
+        <span [ngClass]="daysUntilDue(location.invoice) > 5 ? 'detail-des until' : 'detail-des expired'"
+          no-padding>{{ daysUntilDue(location.invoice) }}
+          days</span>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="under-detail">
+      <ion-col col-6>
+        <span class="detail-title" no-padding>Usage</span><br>
+        <span class="detail-des" no-padding>{{ location.invoice?.usage }}kWh</span>
+      </ion-col>
+      <ion-col col-6>
+        <span class="detail-title" no-padding>Amount</span><br>
+        <span class="detail-des amount" no-padding>{{ location.invoice?.amount | currency:'USD' }}</span>
+      </ion-col>
+    </ion-row>
+    
+  </ion-card>
+</ion-content>

@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-row class="header-row" (click)="navCtrl.pop()">
+    <ion-row class="header-title">
+      <ion-col col-1>
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </ion-col>
+      <span>
+        Terms & Conditions
+      </span>
+      <ion-col col-1></ion-col>
+    </ion-row>
+  </ion-row>
+</ion-header>
+
+<ion-content>
+  <ngx-extended-pdf-viewer *ngIf="!useBase64" [src]="pdfLink" 
+  [useBrowserLocale]="true" [showSidebarButton]="false" 
+  [showFindButton]="false"
+  [showSecondaryToolbarButton]="false"></ngx-extended-pdf-viewer>
+  <ngx-extended-pdf-viewer *ngIf="useBase64" [base64Src]="pdfLink" 
+  [useBrowserLocale]="true" [showSidebarButton]="false" 
+  [showFindButton]="false"
+  [showSecondaryToolbarButton]="false"></ngx-extended-pdf-viewer>
+</ion-content>
+<ion-footer>
+  <div class="agree-btn">
+    <button class="normal-button" ion-button color=secondary (click)="agree()">Agree</button>
+  </div>
+</ion-footer>

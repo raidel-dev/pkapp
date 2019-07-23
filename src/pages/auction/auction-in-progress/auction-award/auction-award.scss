@@ -1,0 +1,149 @@
+page-auction-award {
+    ion-content {
+        background: white !important;
+        .logo-wrap {
+            justify-content: center;
+            align-items: center;
+        }
+        .title {
+            color: #A3ADB7;
+            font-size: 10px;
+            font-family: Montserrat-SemiBold;
+            margin-bottom: 2px;
+            margin-top: 20px;
+        }
+        .des {
+            color: #43535F;
+            font-size: 16px;
+            font-family: Montserrat-Medium;
+        }
+        .date-des {
+            color: #43535F;
+            font-size: 16px;
+            font-family: Montserrat-Bold;
+        }
+        .month-rate-des {
+            color: #8ADB20;
+            font-size: 16px;
+            font-family: Montserrat-Bold;
+        }
+        .detail-box-wrap {
+            margin-top: 10px;
+            .detail-block {
+                background: white;
+                margin-top: 0px;
+                padding-top: 0px;
+                border: 2px solid rgba($color: #8ADB20, $alpha: 0.2);
+                border-radius: 10px;
+                ion-row {
+                    justify-content: center;
+                }
+                .detail-title {
+                    font-size: 12px;
+                    font-family: Montserrat-Bold;
+                    color: #43535F;
+                    text-align: center;
+                }
+                .rate-des {
+                    color: #8ADB20;
+                    font-family: Montserrat-SemiBold;
+
+                    &.font-19 {
+                        font-size: 19px;
+                    }
+                    &.font-22 {
+                        font-size: 22px;
+                    }
+
+                    ion-label {
+                        font-size: 10px !important;
+                        font-family: Montserrat-SemiBold;
+                        text-align: center;
+                    }
+
+                    &.single {
+                        position: relative;
+                        top: -8px;
+                    }
+                }
+                .current-rate-des {
+                    color: #FC8F3B;
+                    font-family: Montserrat-SemiBold;
+
+                    &.font-19 {
+                        font-size: 19px;
+                    }
+                    &.font-22 {
+                        font-size: 22px;
+                    }
+
+                    ion-label {
+                        font-size: 10px !important;
+                        font-family: Montserrat-SemiBold;
+                        text-align: center;
+                    }
+                }
+                ion-icon {
+                    color: #B5BEC5;
+                    font-size: 19px;
+                    font-weight: 800;
+                    margin-right: 0;
+                }
+                .centered-arrow {
+                    .ion-ios-arrow-forward {
+                        top: 6px;
+                        position: relative;
+                        left: 6px;
+                    }
+                }
+            }
+            .detail-block-right {
+                padding-top: 0px;
+                padding-bottom: 0px;
+            }
+        }
+     
+    }
+    ion-footer {
+        .error-message {
+            background: #EAF6FF;
+            padding-left: 10px;
+        }
+        .step-btn {
+            background: #EAF6FF;
+            padding: 0px 10px 20px 10px;
+            margin-bottom: 0;
+        }
+        .go-arrow-configure {
+            color: #43535F;
+            font-size: 12px;
+            font-family: Montserrat-Medium;
+            justify-content: space-between;
+            align-items: center;
+            background: #EAF6FF;
+            ion-icon {
+                color: #B5BEC5;
+                font-size: 19px;
+                font-weight: 800;
+                margin-right: 0;
+            }
+            border-bottom: 1px solid #B6C0C9;
+
+            &.go-arrow-configure-less-padding {
+                padding: 8px 15px 8px 15px;
+            }
+            &.go-arrow-configure-padding {
+                padding: 15px;
+            }
+
+            .accepted {
+                color: green;
+                font-size: 30px;
+            }
+        }
+    }
+}
+
+.ios .detail-block {
+    border-radius: 10px;
+}

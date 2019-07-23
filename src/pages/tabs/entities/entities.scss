@@ -1,0 +1,68 @@
+page-entities {
+    ion-header {
+        .right-icon {
+            position: absolute;
+            right: 20px;
+            transform: scale(1.5, 1.5);
+            transform-origin: right;
+        }
+    }
+    ion-content {
+        background: #EAF6FF !important;
+
+        .button-new {
+            background-color: #8ADB20;
+            color: white;
+            border-radius: 5px;
+            font-size: 10px;
+            font-family: Montserrat-Bold;
+            vertical-align: middle;        
+            padding: 5px;
+        }
+        .item-row {
+            background: white;
+            border-radius: 10px;
+            height: 56px;
+            padding-left: 15px;
+            padding-right: 15px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            ion-label {
+                color: #43535F;
+                font-size: 16px;
+                font-family: Montserrat-Medium;
+            }
+            ion-icon {
+                color: #43535F;
+            }
+            .item-des {
+                width: 80%;
+                .name-row {
+                    color: #43535F;
+                    font-size: 12px;
+                    font-family: Montserrat-Bold;
+                }
+                .address-row {
+                    color: #43535F;
+                    font-size: 12px;
+                    font-family: Montserrat-Medium;
+                }
+            }
+            .item-des {
+                ion-icon {
+                    color: #43535F;
+                    margin: auto;
+                }
+            }
+            svg {
+                margin: auto;
+            }
+        }
+    }
+    .content-md {
+        .item-row {
+            border-radius: 10px;
+        }
+    }
+}

@@ -1,0 +1,246 @@
+<div class="menus">
+  <!-- filter Menu start -->
+  <ion-menu side="right" type="overlay" swipeEnabled=false [content]="mycontent" id="filter">
+    <ion-header>
+      <ion-row class="header-row">
+        <ion-row class="header-title">
+          <ion-col col-1>
+          </ion-col>
+          <span>
+            Filter
+          </span>
+          <ion-col col-1 (click)="closeMenu()">
+            <div class="right-icon">
+              Done
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-header>
+
+    <ion-content>
+      <div class="question-row" *ngFor="let menu of menus" (click)="openMenu(menu.menuid)">
+        <p class="que-title">{{ menu.menutitle }}</p>
+        <p [ngClass]="menu.selecteddetailitem !== -1 ? 'que-des checked' : 'que-des'">{{ menu.subtitle }}</p>
+      </div>
+    </ion-content>
+  </ion-menu>
+  <!-- filter Menu end -->
+  <!-- status Menu start-->
+  <ion-menu side="right" type="overlay" swipeEnabled=false [content]="mycontent" id="status">
+    <ion-header>
+      <ion-row class="header-row">
+        <ion-row class="header-title">
+          <ion-col col-1 (click)="closeSelectedMenu()">
+            <ion-icon name="ios-arrow-back"></ion-icon>
+          </ion-col>
+          <span class="other-menu">
+            Status
+          </span>
+          <ion-col col-1 (click)="closeMenu()">
+            <div class="right-icon">
+              Done
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-header>
+
+    <ion-content>
+      <ion-row class="answer-row" *ngFor="let status of menus[0].items" (click)="selectStatusFilter(status)">
+        <ion-col col-10>
+          <p [ngClass]="isStatusSelected(status) ? 'que-title checked' : 'que-title'">{{ status.label }}</p>
+        </ion-col>
+        <ion-col col-2>
+          <ion-row *ngIf="isStatusSelected(status)" class="check-row">
+            <ion-icon name="ios-checkmark"></ion-icon>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-content>
+  </ion-menu>
+  <!-- status Menu end-->
+  <!-- utility Menu start-->
+  <ion-menu side="right" type="overlay" swipeEnabled=false [content]="mycontent" id="utility">
+    <ion-header>
+      <ion-row class="header-row">
+        <ion-row class="header-title">
+          <ion-col col-1 (click)="closeSelectedMenu()">
+            <ion-icon name="ios-arrow-back"></ion-icon>
+          </ion-col>
+          <span class="other-menu">
+            Utility
+          </span>
+          <ion-col col-1 (click)="closeMenu()">
+            <div class="right-icon">
+              Done
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-header>
+
+    <ion-content>
+      <ion-row class="answer-row" *ngFor="let utility of getAllUtilities()" (click)="selectUtilityFilter(utility)">
+        <ion-col col-10>
+          <p [ngClass]="isUtilitySelected(utility) ? 'que-title checked' : 'que-title'">{{ utility.name }}</p>
+        </ion-col>
+        <ion-col col-2>
+          <ion-row *ngIf="isUtilitySelected(utility)" class="check-row">
+            <ion-icon name="ios-checkmark"></ion-icon>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-content>
+  </ion-menu>
+  <!-- utility Menu end-->
+  <!-- state Menu start-->
+  <ion-menu side="right" type="overlay" swipeEnabled=false [content]="mycontent" id="state">
+    <ion-header>
+      <ion-row class="header-row">
+        <ion-row class="header-title">
+          <ion-col col-1 (click)="closeSelectedMenu()">
+            <ion-icon name="ios-arrow-back"></ion-icon>
+          </ion-col>
+          <span class="other-menu">
+            State
+          </span>
+          <ion-col col-1 (click)="closeMenu()">
+            <div class="right-icon">
+              Done
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-header>
+
+    <ion-content>
+      <ion-row class="answer-row" *ngFor="let state of getAllStates()" (click)="selectStateFilter(state)">
+        <ion-col col-10>
+          <p [ngClass]="isStateSelected(state) ? 'que-title checked' : 'que-title'">{{ state.stateLong }}</p>
+        </ion-col>
+        <ion-col col-2>
+          <ion-row *ngIf="isStateSelected(state)" class="check-row">
+            <ion-icon name="ios-checkmark"></ion-icon>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-content>
+  </ion-menu>
+  <!-- state Menu end-->
+  <!-- daterange Menu start-->
+  <ion-menu side="right" type="overlay" swipeEnabled=false [content]="mycontent" id="signaturedate">
+    <ion-header>
+      <ion-row class="header-row">
+        <ion-row class="header-title">
+          <ion-col col-1 (click)="closeSelectedMenu()">
+            <ion-icon name="ios-arrow-back"></ion-icon>
+          </ion-col>
+          <span class="other-menu">
+            Signature Date
+          </span>
+          <ion-col col-1 (click)="closeMenu()">
+            <div class="right-icon">
+              Done
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+      <ion-row class="header-date">
+        {{menus[3].subtitle}}
+      </ion-row>
+    </ion-header>
+
+    <ion-content>
+      <ion-calendar [(ngModel)]="menus[3].items[0]" [options]="optionsRange" [type]="type" [format]="'YYYY-MM-DD'"
+        (onChange)="onChangeCalendar($event)">
+      </ion-calendar>
+    </ion-content>
+  </ion-menu>
+  <!-- signaturedate Menu end-->
+</div>
+<!--header & content -->
+<ion-header>
+  <ion-row class="header-row">
+    <ion-row class="header-title">
+      <ion-col col-1 (click)="navCtrl.pop()">
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </ion-col>
+      <span>
+        {{ entity.name }}
+      </span>
+      <ion-col col-1 (click)="openMenu('filter')">
+        <div class="right-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+            <g id="Group_714" data-name="Group 714" transform="translate(-837 -1010)">
+              <g id="Icon-28_placeholder" transform="translate(372 119)">
+                <rect id="Rectangle_307" data-name="Rectangle 307" width="28" height="28" transform="translate(465 891)"
+                  fill="none" />
+              </g>
+              <path id="Path_18" data-name="Path 18" d="M18.911.525a.777.777,0,0,1-.188.942L12.086,8.1v9.989a.8.8,0,0,1-.525.794.948.948,0,0,1-.337.067.8.8,0,0,1-.606-.256L7.172,15.253a.828.828,0,0,1-.256-.606V8.1L.279,1.467A.779.779,0,0,1,.091.525.806.806,0,0,1,.885,0H18.117A.8.8,0,0,1,18.911.525Z"
+                transform="translate(841.49 1015)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="1.5" />
+            </g>
+          </svg>
+        </div>
+
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-header>
+
+<ion-content #mycontent padding>
+  <div class="add-item-button">
+    <ion-row>
+      <ion-col col-12>
+        <button class="normal-button" ion-button (click)="goAddContract()">Add New Contract</button>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div class="add-item-button add-item-button-no-margin-top">
+    <ion-row>
+      <ion-col col-12>
+        <button class="normal-button" ion-button (click)="goAddPreloadedConract()">Add Existing Contract</button>
+      </ion-col>
+    </ion-row>
+  </div>
+  <ion-spinner *ngIf="loading"></ion-spinner>
+  <ion-row *ngIf="(!contracts || !(contracts | contractsFilter:filter).length) && !loading">
+    <ion-col col-12 text-center>
+      You can change the filter in the top right, or you can add some contracts by clicking the button above to add any unassigned preloaded contracts.
+    </ion-col>
+  </ion-row>
+  <ion-row class="item-row" *ngFor="let contract of contracts | contractsFilter:filter | sortContractsByServiceType">
+    <ion-col no-padding col-4 (click)="openContactDetail(contract)">
+      <div class="item-des">
+        <ion-label class="name-row" no-margin>{{ contract.customer?.DBAName }}</ion-label>
+        <ion-label class="address-row" no-margin>{{ contract.customer?.address1 }} {{ contract.customer?.address2 }}</ion-label>
+      </div>
+    </ion-col>
+
+    <!-- view button -->
+    <ion-col no-padding col-5>
+      <button *ngIf="[94,95,96].indexOf(contract.status) !== -1"
+        class="button-new"
+        (click)="goAuction(contract)">{{ Constants.quoteStatuses[contract.status] }}</button>
+    </ion-col>
+
+    <!-- gas icon -->
+    <ion-col col-2 *ngIf="contract.serviceTypeID === Constants.serviceTypes.gas">
+      <ion-row>
+        <gas-icon></gas-icon>
+      </ion-row>
+    </ion-col>
+    <!-- electricity icon -->
+    <ion-col col-2 *ngIf="contract.serviceTypeID === Constants.serviceTypes.electricity">
+      <ion-row>
+        <electricity-icon></electricity-icon>
+      </ion-row>
+    </ion-col>
+    <!-- arrow -->
+    <ion-col col-1 (click)="openContactDetail(contract)">
+      <ion-row>
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-content>

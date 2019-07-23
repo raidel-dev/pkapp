@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-row class="header-row">
+    <ion-row class="header-title">
+      <ion-col text-center>
+        <span>
+          BILLING
+        </span>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-header>
+
+<ion-content padding>
+  <ion-spinner *ngIf="loading"></ion-spinner>
+  <ion-row *ngIf="(!entities || !(entities | entitiesWithInvoices).length) && (!individualContracts || !(individualContracts | contractsWithoutEntitiesFilter | contractsWithInvoices).length) && !loading">
+    <ion-col col-12 text-center>
+      You don't have any invoices yet!  You'll get an alert when there are some pending invoices in your queue, or you can just check back later.
+    </ion-col>
+  </ion-row>
+  <ion-row class="item-row" *ngFor="let entity of entities | entitiesWithInvoices" (click)="goBillingEntityInvoices(entity)">
+    <ion-label>{{ entity.name }}</ion-label>
+    <ion-icon name="ios-arrow-forward"></ion-icon>
+  </ion-row>
+  <ion-row class="item-row" *ngFor="let contract of individualContracts | contractsWithoutEntitiesFilter | contractsWithInvoices" (click)="goContractBillingDetail(contract)">
+    <ion-label>{{ contract.customer?.DBAName }}</ion-label>
+    <ion-icon name="ios-arrow-forward"></ion-icon>
+  </ion-row>
+</ion-content>
