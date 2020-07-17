@@ -68,7 +68,7 @@
     "ion2-calendar": "^2.2.0",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "ngx-extended-pdf-viewer": "^0.9.46",
     "ngx-pinch-zoom": "^1.2.3",
     "rxjs": "~6.2.0",
